@@ -1,0 +1,4 @@
+name: RandomBox
+version: '${version}'
+main: steaming.randombox.main
+api-version: '1.20'
