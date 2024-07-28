@@ -6,9 +6,6 @@ plugins {
     kotlin("jvm") version "2.0.0"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
-
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
@@ -33,9 +30,12 @@ tasks {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
     }
 
+
     //auto write plugin.yml (exclude command)
     processResources{
+        outputs.upToDateWhen {false}
         filesMatching("plugin.yml"){
+            println("> Task :auto write plugin.yml")
             expand(project.properties)
         }
     }

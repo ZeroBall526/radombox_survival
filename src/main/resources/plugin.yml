@@ -4,6 +4,9 @@ main: ${main_class}
 author: '${author}'
 api-version: '${api_version}'
 commands:
-  ga:
-    description: "give gold apple"
+  box:
+    description: "give gacha box"
+    operator : admin
+  toolbox:
+    description: "give tool box"
     operator : admin

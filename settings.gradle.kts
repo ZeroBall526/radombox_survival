@@ -1,2 +1,2 @@
-rootProject.name = "paper-sample"
+rootProject.name = "Random-Box"
 
