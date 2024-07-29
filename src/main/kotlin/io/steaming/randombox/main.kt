@@ -25,7 +25,7 @@ class main : JavaPlugin() {
 
     private fun initCommand(){
         //type you want to add boxcommand class
-        getCommand("boxcommand")?.setExecutor(boxcommand())
-        getCommand("toolboxcommand")?.setExecutor(toolboxcommand())
+        getCommand("box")?.setExecutor(boxcommand())
+        getCommand("toolbox")?.setExecutor(toolboxcommand())
     }
 }

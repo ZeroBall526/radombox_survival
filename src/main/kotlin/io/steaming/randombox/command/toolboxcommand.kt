@@ -9,15 +9,16 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 class toolboxcommand : CommandExecutor {
+
     private val genbox = box()
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
-
         if (sender is Player){
             if (sender.isOp){
                 val p : Player = sender
-                val item = genbox.givetoolbox()
+                p.sendMessage("아이템을 지급했어요")
 
+                val item = genbox.givetoolbox()
                 item.amount = 64
 
                 p.inventory.addItem(item)

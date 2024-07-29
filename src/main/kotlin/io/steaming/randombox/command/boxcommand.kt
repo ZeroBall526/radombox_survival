@@ -9,11 +9,10 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 class boxcommand : CommandExecutor {
+
     private val genbox = box()
 
-    //command function page
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
-
         if (sender is Player){
             if (sender.isOp){
                 val p : Player = sender
