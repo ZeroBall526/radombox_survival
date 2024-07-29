@@ -1,8 +1,9 @@
 package io.steaming.randombox.event
 
+import io.steaming.randombox.box
+import io.steaming.randombox.data
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
-import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -21,6 +22,7 @@ import kotlin.random.nextInt
 class Event : Listener {
 
     private val data = data()
+    private val genBox = box()
 
     //모든 제작 작업이 된 아이템 랜덤 박스로 바꿔치기
     @EventHandler
@@ -28,7 +30,7 @@ class Event : Listener {
         val inv = e.inventory
         val result = inv.result ?: return
         
-        //예외 : 기본이 되는 판자, 막대기, 작업대, 버튼(너무 날 먹임), 가죽값옷, 나무도구, 돌도구는 제외
+        //예외 : 기본이 되는 판자, 막대기, 작업대, 버튼(너무 날 먹임), 가죽갑옷, 나무도구, 돌도구는 제외
         if(result.type == Material.CRAFTING_TABLE){
             val item = ItemStack(Material.CRAFTING_TABLE)
             item.itemMeta = item.itemMeta.apply {
@@ -52,14 +54,14 @@ class Event : Listener {
         }
         else if(data.exclude_tool.contains(result.type)){
             val index = result.amount
-            inv.result = givebox(index)
+            inv.result = genBox.givebox(index)
         }
         else if(data.toolboxlist.toTypedArray().contains(result.type)){
-            inv.result = givetoolbox(1)
+            inv.result = genBox.givetoolbox(1)
         }
         else if(Material.entries.toTypedArray().contains(result.type)){
             val index = result.amount
-            inv.result = givebox(index)
+            inv.result = genBox.givebox(index)
         }
     }
 
@@ -75,9 +77,9 @@ class Event : Listener {
                 //일반가챠
                 val itemamount = item.amount
                 if (itemamount > 1){
-                    p.inventory.setItemInMainHand(givebox(itemamount-1))
+                    p.inventory.setItemInMainHand(genBox.givebox(itemamount-1))
                 }else{
-                    p.inventory.removeItem(givebox())
+                    p.inventory.removeItem(genBox.givebox())
                 }
 
                 gacha(p)
@@ -86,9 +88,9 @@ class Event : Listener {
                 //도구가챠
                 val itemamount = item.amount
                 if (itemamount>1){
-                    p.inventory.setItemInMainHand(givetoolbox(itemamount-1))
+                    p.inventory.setItemInMainHand(genBox.givetoolbox(itemamount-1))
                 }else{
-                    p.inventory.removeItem(givetoolbox())
+                    p.inventory.removeItem(genBox.givetoolbox())
                 }
 
                 toolgacha(p)
@@ -107,35 +109,9 @@ class Event : Listener {
             e.isCancelled = true
         }
     }
-    
-    //랜덤박스 생성
-    private fun givebox(amount : Int = 1): ItemStack {
-        val box  = ItemStack(Material.CHEST)
-        box.amount = amount
-        box.itemMeta = box.itemMeta.apply{
-            itemName(Component.text("GachaBox"))
-            displayName(Component.text("랜덤 상자", TextColor.color(0xFF00FF), TextDecoration.BOLD))
-            val lorelist : List<Component> = listOf(Component.text("뭔가 세상에 있는 모든 아이템이 나올 듯한"),Component.text("수상한 랜덤 박스이다..."))
-            lore(lorelist)
-        }
-        return box
-    }
-
-    //랜덤도구박스 생성
-    private fun givetoolbox(amount : Int = 1): ItemStack {
-        val box  = ItemStack(Material.CHEST)
-        box.amount = amount
-        box.itemMeta = box.itemMeta.apply{
-            itemName(Component.text("GachaToolBox"))
-            displayName(Component.text("도구 랜덤 상자", TextColor.color(0x63C5DA), TextDecoration.BOLD))
-            val lorelist : List<Component> = listOf(Component.text("뭔가 세상에 있는 모든 도구 및 전투 아이템이 나올 듯한"),Component.text("수상한 랜덤 박스이다..."))
-            lore(lorelist)
-        }
-        return box
-    }
 
     //랜덤 아이템 지급
-    private fun gacha(player : Player){
+    fun gacha(player : Player){
         try{
             var item: Material?
             while(true){

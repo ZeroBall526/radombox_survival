@@ -1,6 +1,10 @@
-package io.steaming.randombox.event
+package io.steaming.randombox
 
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
+import org.bukkit.inventory.ItemStack
 
 class data {
     val toolboxlist = (Material.entries.filter { material: Material ->  material.name.contains("HOE")}
@@ -30,5 +34,34 @@ class data {
             + Material.entries.filter { material: Material ->  material.name.contains("NETHERITE")}
             -Material.DIAMOND-Material.DEEPSLATE_DIAMOND_ORE-Material.DIAMOND_ORE-Material.DIAMOND_HORSE_ARMOR
             -Material.NETHERITE_INGOT-Material.NETHERITE_UPGRADE_SMITHING_TEMPLATE-Material.NETHERITE_SCRAP)
+}
+
+class box {
+
+    //랜덤도구박스 생성
+    fun givetoolbox(amount : Int = 1): ItemStack {
+        val box  = ItemStack(Material.CHEST)
+        box.amount = amount
+        box.itemMeta = box.itemMeta.apply{
+            itemName(Component.text("GachaToolBox"))
+            displayName(Component.text("도구 랜덤 상자", TextColor.color(0x63C5DA), TextDecoration.BOLD))
+            val lorelist : List<Component> = listOf(Component.text("뭔가 세상에 있는 모든 도구 및 전투 아이템이 나올 듯한"), Component.text("수상한 랜덤 박스이다..."))
+            lore(lorelist)
+        }
+        return box
+    }
+
+    //랜덤박스 생성
+    fun givebox(amount : Int = 1): ItemStack {
+        val box  = ItemStack(Material.CHEST)
+        box.amount = amount
+        box.itemMeta = box.itemMeta.apply{
+            itemName(Component.text("GachaBox"))
+            displayName(Component.text("랜덤 상자", TextColor.color(0xFF00FF), TextDecoration.BOLD))
+            val lorelist : List<Component> = listOf(Component.text("뭔가 세상에 있는 모든 아이템이 나올 듯한"),Component.text("수상한 랜덤 박스이다..."))
+            lore(lorelist)
+        }
+        return box
+    }
 }
 

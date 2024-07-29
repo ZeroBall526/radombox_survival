@@ -5,8 +5,8 @@ author: '${author}'
 api-version: '${api_version}'
 commands:
   box:
-    description: "give gacha box"
+    description: "give gacha boxcommand"
     operator : admin
   toolbox:
-    description: "give tool box"
+    description: "give tool boxcommand"
     operator : admin

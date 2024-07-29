@@ -1,7 +1,7 @@
 package io.steaming.randombox
 
-import io.steaming.randombox.command.box
-import io.steaming.randombox.command.toolbox
+import io.steaming.randombox.command.boxcommand
+import io.steaming.randombox.command.toolboxcommand
 import io.steaming.randombox.event.Event
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -13,7 +13,7 @@ class main : JavaPlugin() {
         //register event class
         server.pluginManager.registerEvents(Event(), this@main)
 
-        //register box
+        //register boxcommand
         initCommand()
     }
 
@@ -24,8 +24,8 @@ class main : JavaPlugin() {
     }
 
     private fun initCommand(){
-        //type you want to add box class
-        getCommand("box")?.setExecutor(box())
-        getCommand("toolbox")?.setExecutor(toolbox())
+        //type you want to add boxcommand class
+        getCommand("boxcommand")?.setExecutor(boxcommand())
+        getCommand("toolboxcommand")?.setExecutor(toolboxcommand())
     }
 }
